@@ -133,7 +133,7 @@ def _simulate_single(drug, age, weight, height_cm, sex, regimen, t_end):
     sol = solve_ivp(ode, [0, t_end], y0, t_eval=t_eval, method='LSODA')
     cp = sol.y[0] / v1
     ce = sol.y[3]
-    auc = np.trapz(cp, sol.t)
+    auc = np.trapezoid(cp, sol.t)
     cmax = cp.max()
     tmax = sol.t[cp.argmax()]
     return {
