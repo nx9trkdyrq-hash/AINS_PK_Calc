@@ -18,7 +18,7 @@ with st.sidebar:
     st.header("Patient")
     age = st.number_input("Alter (Jahre)", 0, 120, 50, 1)
     weight = st.number_input("Gewicht (kg)", 20.0, 300.0, 75.0, 0.5)
-    height = st.number_input("Größe (cm)", 100.0, 230.0, 175.0, 0.5)
+    height_cm_cm = st.number_input("Größe (cm)", 100.0, 230.0, 175.0, 0.5)
     sex = st.selectbox("Geschlecht", ["männlich", "weiblich"])
 
     st.header("Therapie")
@@ -36,12 +36,12 @@ if secondary_enabled and secondary == primary:
     st.stop()
 
 regimen = build_regimen(primary, secondary if secondary_enabled else None, profile_name, multiplier)
-warnings = validate_inputs(age, weight, height, sex, regimen, t_end)
+warnings = validate_inputs(age, weight, height_cm, sex, regimen, t_end)
 
 for msg in warnings:
     st.warning(msg)
 
-result = simulate_regimen(primary, age, weight, height, sex, regimen, t_end, secondary_name=secondary if secondary_enabled else None)
+result = simulate_regimen(primary, age, weight, height_cm, sex, regimen, t_end, secondary_name=secondary if secondary_enabled else None)
 
 cp = result["primary"]["cp"]
 ce = result["primary"]["ce"]
@@ -67,7 +67,7 @@ if secondary_enabled and result.get("secondary") is not None:
 
 fig.update_layout(
     template="plotly_white",
-    height=620,
+    height_cm=620,
     xaxis_title="Zeit (min)",
     yaxis_title="Konzentration",
 )
